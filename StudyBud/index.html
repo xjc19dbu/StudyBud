@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+        <script src="js.js"></script>
+        <title>
+            StudyBud
+        </title>
+    </head> 
+    <body>
+        <h1>
+            StudyBud
+        </h1>
+        <div id="container">
+            <div id="tabs">
+                <p id="logintab" class="tabs" onclick="loginFun()">Log in</p>
+                <p id="registertab" class="tabs" onclick="regFun()">Register</p>
+            </div>
+            <div id="clear"></div>
+            <div id="cont">
+                <div id="login" class="comm">
+                    <h3>Sign in</h3>
+                    <input id="email" type="email" placeholder="Email" required/>
+                    <input id="pass" type="password" placeholder="Password" required/>
+                    <input type="submit" onclick="login()" value="Submit"/>
+                </div>
+                <div id="register" class="comm">
+                    <h3>Register</h3>
+                    <input id="Rname" type="name" placeholder="Full Name" required/>
+                    <input id="Remail" type="email" placeholder="Email" required/>
+                    <input id="Rpass" type="password" placeholder="Password" required/>
+                    <input id="Rrepass" type="password" placeholder="Confirm Password" required/>
+                    <input type="submit" onclick="register()" value="Submit"/>
+                </div >
+            </div>
+        </div>
+    </body>
+</html>
