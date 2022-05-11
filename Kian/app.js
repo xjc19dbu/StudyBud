@@ -8,6 +8,9 @@ app.use(express.static("public"));
 const fs = require("fs");
 //const { callbackify } = require("util");
 
+var emailAccount;
+
+
 app.post("/",jsonParser,function(req,res){
     const body = JSON.stringify(req.body);
 
@@ -21,7 +24,6 @@ app.post("/",jsonParser,function(req,res){
             var jsonValues = JSON.parse(data); //
             jsonValues.accounts.push(body); //add values to the json accounts
             console.log(jsonValues);
-            console.log('attempt');
             var jsonStringify = JSON.stringify(jsonValues);
             fs.writeFile('jsonFile.json',jsonStringify,'utf-8',err => {
                 if (err) {
@@ -41,16 +43,21 @@ app.post("/SignIn",jsonParser,function(req,res){ //this will be called to return
             return
         }
         else{
-            //iterate through the json file,
-            console.log(req.body.Email);
-            //var getValues = JSON.parse(req.body);
-            console.log("server side");
-            //console.log("email -> ",getValues.Email);
-                //test to see if the email is the same as the one we are inputting, if it is then test against the password
-                    //if password is not equal then return false
-                    //else return true
+            var jsonValues = (JSON.parse(data)).accounts;
+            for(var i = 0; i<jsonValues.length; i++){
+                var lineJsonValues = JSON.parse(jsonValues[i]);
+
+                if (lineJsonValues.Email == req.body.Email){
+                    if(lineJsonValues.Password == req.body.Password){
+                        console.log("sign in successfull");
+                        emailAccount = lineJsonValues.Email;
+                        res = lineJsonValues.Email; //return the email that the user is going to be signed in with
+                        console.log(res);
+                    }
+                }
+            }
         }
-        //return false
+        res = null;
     })
 })
 
