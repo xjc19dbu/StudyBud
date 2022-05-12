@@ -2,7 +2,6 @@
 
 console.log("start");
 
-
 //make a fecth request!!
 
 function onRegistrationClick(event){
@@ -31,31 +30,32 @@ function onRegistrationClick(event){
 function onSignInClick(event){
     event.preventDefault();
 
-    const values = 
-    {Email :document.getElementById("Email").value,
-    Password: document.getElementById("Password").value}
+    let email = document.getElementById('Email').value;
 
-    const stringifyValues = JSON.stringify(values);
+    const values = 
+    { Email: document.getElementById("Email").value,
+     Password: document.getElementById("Password").value}
 
     fetch("/SignIn",{ //getting the values to compare with outside of the public directory
         method: "POST",
         headers:{
-            "Accept": "application/json",
             "Content-Type": "application/json"
         },
-        body: stringifyValues})
-        .then(res => {
-            if (res!= null){ //res = email for the signed in account, if it does not have a value (aka null) then sign in was not successful !
-                console.log("email----"+res);
-                window.location.href = "another.html";
+        body: JSON.stringify(values)})
+        .then(response => response.json())
+        .then(d => {
+            console.log(d)
+            if(d == true){
+                location.href = 'home.html';
             }
             else{
-                console.log("sign in was not successful, password or email was incorrect!");
-            }
+                alert("Sign in unsuccessful")
+        }})
+        .catch(err => {
+            console.log("Error Reading data " + err);
         });
+    return;
 }
-
-
 
 //submittion buttons
 const submitRegistration = document.getElementById('SubmitRegistration');
