@@ -40,24 +40,25 @@ app.post("/SignIn",jsonParser,function(req,res){ //this will be called to return
         if (err) {
             console.log("error reading the file");
             console.error(err);
-            return
+            res.send(false);
+            return;
         }
         else{
             var jsonValues = (JSON.parse(data)).accounts;
             for(var i = 0; i<jsonValues.length; i++){
                 var lineJsonValues = JSON.parse(jsonValues[i]);
-
                 if (lineJsonValues.Email == req.body.Email){
                     if(lineJsonValues.Password == req.body.Password){
                         console.log("sign in successfull");
                         emailAccount = lineJsonValues.Email;
-                        res = lineJsonValues.Email; //return the email that the user is going to be signed in with
-                        console.log(res);
+                        res.send(true);
+                        return;
                     }
                 }
             }
+            res.send(false);
+            return;
         }
-        res = null;
     })
 })
 
