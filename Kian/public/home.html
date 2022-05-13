@@ -7,14 +7,19 @@
         <link rel="stylesheet" href="style.css">
         <script src="appPublic.js" defer></script>
     </head>
-
     <body>
         <header>
             <h1>StudyBud</h1>
             <h2>Plan Ahead, Get Ahead</h2>
         </header>
         <main>
-           
+            <label for="files">Upload Semester Profile:</label>
+            <br>
+            <input type="file" id="myFile" accept=".csv" required/>
+            <br>
+            <output id="out">
+                file contents will appear here
+            </output>
         </main>
     </body>
 </HTML>

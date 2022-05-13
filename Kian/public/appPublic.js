@@ -18,7 +18,7 @@ function onRegistrationClick(event){
 
     const stringifyValues = JSON.stringify(values);
 
-    fetch("/",{
+    fetch("/SignUp",{
         method: "POST",
         headers: {
             "Accept": "application/json",
@@ -57,6 +57,20 @@ function onSignInClick(event){
     return;
 }
 
+function csvToArray(str, delimiter = ",") {
+    const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
+    const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+    const arr = rows.map(function (row) {
+      const values = row.split(delimiter);
+      const el = headers.reduce(function (object, header, index) {
+        object[header] = values[index];
+        return object;
+      }, {});
+      return el;
+    });
+    return arr;
+  }
+
 //submittion buttons
 const submitRegistration = document.getElementById('SubmitRegistration');
 try{
@@ -66,12 +80,27 @@ catch(error){
     console.log("error as there is no registration button :::::", error) //this will throw an error when the registration is not on the 
 }
 
-
-
 const submitSignIn = document.getElementById('submitSignIn');
 try{
     submitSignIn.addEventListener("click",onSignInClick);
 }
 catch(error){
     console.log("error as there is no login button  :::::",error)
+}
+
+const fileInput = document.getElementById('myFile');
+try{
+    readFile = function () {
+        var reader = new FileReader();
+        reader.onload = function () {
+            const data = csvToArray(reader.result);
+            document.getElementById('out').innerHTML = JSON.stringify(data);
+        };
+        // start reading the file. When it is done, calls the onload event defined above.
+        reader.readAsBinaryString(fileInput.files[0]);
+    };
+    fileInput.addEventListener("change",readFile);
+}
+catch(error){
+    console.log("error as there is no file button  :::::",error)
 }
