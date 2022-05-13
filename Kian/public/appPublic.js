@@ -58,7 +58,7 @@ function onSignInClick(event){
 }
 
 function csvToArray(str, delimiter = ",") {
-    const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
+    const headers = str.slice(0, str.indexOf("\r\n")).split(delimiter);
     const rows = str.slice(str.indexOf("\n") + 1).split("\n");
     const arr = rows.map(function (row) {
       const values = row.split(delimiter);
