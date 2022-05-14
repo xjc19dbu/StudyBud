@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
- <link rel="stylesheet" href="AccountStyle.css">
+ <link rel="stylesheet" href="indexStyle.css">
 <title>Account Management</title>
 </head>
 <body>
@@ -10,18 +10,42 @@
 
 <h1>Account Management</h1>
 
-<div>
+<div id="roundBox">
+<fieldset>
 <h2>Email:</h2>
-<p>user email</p>
-<a href="ChangeEmail.html">Change Email</a>
+<div id="email">
+<script>
+    fetch("jsonFile.json")
+    .then(response=> response.json())
+    .then(data => {
+        console.log(data.accounts.at(-1))
+        let text = data.accounts.at(-1).toString()
+        email = text.slice(text.indexOf('"Email":"')+ 9,
+                    text.lastIndexOf('",'),);
+        document.querySelector("#email").innerText = email
+    })
+</script>
+</div>
+<a id="link" href="ChangeEmail.html">Change Email</a>
 
 <h2>Name:</h2>
-<p>user name</p>
-<a href="ChangeName.html">Change Name</a>
+<div id="name">
+<script>
+    fetch("jsonFile.json")
+    .then(response=> response.json())
+    .then(data => {
+        let text = data.accounts.at(-1).toString()
+        name = text.slice(text.indexOf('"Forename":"')+ 12,
+                    text.lastIndexOf('","Surname'),);
+        document.querySelector("#name").innerText = name
+    })
+</script>
+</div>
+<a id= "link" href="ChangeName.html">Change Name</a>
 
-<h2>Password:</h2>
-<p>user password</p>
-<a href="ChangePassword.html">Change Password</a>
+<h2>Password</h2>
+<a id="link" href="ChangePassword.html">Change Password</a>
+</fieldset>
 </div>
 
 </body>
