@@ -17,9 +17,34 @@
             <br>
             <input type="file" id="myFile" accept=".csv" required/>
             <br>
-            <output id="out">
-                file contents will appear here
-            </output>
+            <div id="gantt">
+                <select id="modules" onchange="populate()">
+                </select>
+                <div id="data">
+                </div>
+            </div>
+            <div class="container">
+                <div class="chart">
+                    <div class="chart-row chart-period">
+                        <div class="chart-row-item">
+                            </div><span>January</span><span>February</span><span>March</span>
+                            <span>April</span><span>May</span><span>June</span><span>July</span>
+                            <span>August</span><span>September</span><span>October</span>
+                            <span>November</span><span>December</span>
+                        </div>
+                        <div class="chart-row chart-lines"> 
+                            <span></span><span></span><span></span>
+                            <span></span><span></span><span></span>
+                            <span></span><span></span><span></span>
+                            <span></span><span></span>	<span></span>    
+                        </div>
+                        <div class="chart-row" id="tasks">  
+                            <ul class="chart-row-bars">    
+                                <li class="chart-li-one"></li>
+                            </ul>
+                        </div>
+                </div>
+            </div>
         </main>
     </body>
 </HTML>

@@ -69,7 +69,33 @@ function csvToArray(str, delimiter = ",") {
       return el;
     });
     return arr;
-  }
+}
+
+function populate(){
+    document.getElementById("data").innerText = "";
+    var selection = parseInt(document.getElementById("modules").selectedIndex);
+    for(const [key, value] of Object.entries(data[selection])){
+        if(`${key}` == "Tasks"){
+            for(const each of `${value}`.split("||")){
+                var newElement = document.createElement("div");
+                newElement.innerHTML = each;
+                newElement.classList.add("chart-row-item");
+                document.getElementById("tasks").appendChild(newElement);
+            }
+        }
+    }
+}
+
+function displayChart(){
+    document.getElementById("modules").innerHTML = "";
+    for(let i = 0;i < data.length;i++){
+        for(const [key, value] of Object.entries(data[i])){
+            if(key == "Module"){
+                document.getElementById("modules").innerHTML += `<option value=${value}>${value}</option>`
+            }
+        }
+    }
+}
 
 //submittion buttons
 const submitRegistration = document.getElementById('SubmitRegistration');
@@ -90,11 +116,12 @@ catch(error){
 
 const fileInput = document.getElementById('myFile');
 try{
-    readFile = function () {
+    readFile = function() {
         var reader = new FileReader();
         reader.onload = function () {
-            const data = csvToArray(reader.result);
-            document.getElementById('out').innerHTML = JSON.stringify(data);
+            globalThis.data = csvToArray(reader.result);
+            displayChart();
+            populate();
         };
         // start reading the file. When it is done, calls the onload event defined above.
         reader.readAsBinaryString(fileInput.files[0]);
