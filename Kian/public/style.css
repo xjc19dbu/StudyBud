@@ -25,7 +25,7 @@
 
 .chart-period > span {
 	text-align: center;  
-	font-size: 13px;  
+	font-size: 15px;  
 	align-self: center;  
 	font-weight: bold;  
 	padding: 15px 0;   
@@ -44,7 +44,7 @@
 	background-color: #808080;  
 	border: 1px solid #000;  
 	border-top: 0;  border-left: 0;  
-	padding: 20px 0;  font-size: 15px;  
+	padding: 20px 0;  font-size: 10px;  
 	font-weight: bold;  
 	text-align: center;
 }
@@ -59,7 +59,7 @@
 li {  
     font-weight: 450;  
     text-align: left;  
-    font-size: 15px;  min-height: 15px;  
+    font-size: 10px;  min-height: 15px;  
     background-color: #708090;  
     padding: 5px 15px;  color: #fff;  
     overflow: hidden;  

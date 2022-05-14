@@ -73,21 +73,25 @@ function csvToArray(str, delimiter = ",") {
 
 function populate(){
     for(let i = 0;i < data.length;i++){
+        let dateStart = data[i].Start.split("||");
+        let dateEnd = data[i].End.split("||");
         for(const [key, value] of Object.entries(data[i])){
             if(key == "Tasks"){
-                for(const each of `${value}`.split("||")){
+                let tasks = value.split("||")
+                for(let z = 0; z < tasks.length;z++){
                     var newElement = document.createElement("div");
                     newElement.innerHTML = data[i].Module;
                     newElement.classList.add("chart-row-item");
                     document.getElementById("tasks").appendChild(newElement);
                     var newList = document.createElement("ul");
                     newList.classList.add("chart-row-bars");
-                    newList.id = data[i].Module + each;
+                    newList.id = data[i].Module + tasks[z];
                     document.getElementById("tasks").appendChild(newList);
                     var newItem = document.createElement("li");
-                    newItem.innerHTML = each;
-                    newItem.classList.add("chart-li-one");
-                    document.getElementById(data[i].Module + each).appendChild(newItem);
+                    newItem.innerHTML = tasks[z];
+                    newItem.classList.add("chart-li");
+                    newItem.style.gridColumn = `${dateStart[z]}/${dateEnd[z]}`;
+                    document.getElementById(data[i].Module + tasks[z]).appendChild(newItem);
                 }
             }
         }
