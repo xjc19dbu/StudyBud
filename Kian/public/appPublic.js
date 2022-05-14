@@ -72,26 +72,23 @@ function csvToArray(str, delimiter = ",") {
 }
 
 function populate(){
-    document.getElementById("data").innerText = "";
-    var selection = parseInt(document.getElementById("modules").selectedIndex);
-    for(const [key, value] of Object.entries(data[selection])){
-        if(`${key}` == "Tasks"){
-            for(const each of `${value}`.split("||")){
-                var newElement = document.createElement("div");
-                newElement.innerHTML = each;
-                newElement.classList.add("chart-row-item");
-                document.getElementById("tasks").appendChild(newElement);
-            }
-        }
-    }
-}
-
-function displayChart(){
-    document.getElementById("modules").innerHTML = "";
     for(let i = 0;i < data.length;i++){
         for(const [key, value] of Object.entries(data[i])){
-            if(key == "Module"){
-                document.getElementById("modules").innerHTML += `<option value=${value}>${value}</option>`
+            if(key == "Tasks"){
+                for(const each of `${value}`.split("||")){
+                    var newElement = document.createElement("div");
+                    newElement.innerHTML = data[i].Module;
+                    newElement.classList.add("chart-row-item");
+                    document.getElementById("tasks").appendChild(newElement);
+                    var newList = document.createElement("ul");
+                    newList.classList.add("chart-row-bars");
+                    newList.id = data[i].Module + each;
+                    document.getElementById("tasks").appendChild(newList);
+                    var newItem = document.createElement("li");
+                    newItem.innerHTML = each;
+                    newItem.classList.add("chart-li-one");
+                    document.getElementById(data[i].Module + each).appendChild(newItem);
+                }
             }
         }
     }
@@ -120,7 +117,6 @@ try{
         var reader = new FileReader();
         reader.onload = function () {
             globalThis.data = csvToArray(reader.result);
-            displayChart();
             populate();
         };
         // start reading the file. When it is done, calls the onload event defined above.
