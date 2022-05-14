@@ -57,6 +57,56 @@ function onSignInClick(event){
     return;
 }
 
+function infoBoxPop(id){
+    for(let i = 0;i < data.length;i++){
+        let Module = data[i].Module;
+        for(const [key, value] of Object.entries(data[i])){
+            if(key == "Tasks"){
+                let tasks = value.split("||")
+                for(let z = 0; z < tasks.length;z++){
+                    let dataid = Module + " " + tasks[z];
+                    if(dataid == id){
+                        let Activities = data[i].Activities.split("||");
+                        document.getElementById("activities").innerText = Activities[z];
+                        let Contributions = data[i].Contribution.split("||");
+                        document.getElementById("contributions").innerText = Contributions[z];
+                    }
+                }
+            }
+        }
+    }
+}
+
+function submitForm(id){
+    for(let i = 0;i < data.length;i++){
+        let Module = data[i].Module;
+        for(const [key, value] of Object.entries(data[i])){
+            if(key == "Tasks"){
+                let tasks = value.split("||")
+                for(let z = 0; z < tasks.length;z++){
+                    let dataid = Module + " " + tasks[z];
+                    if(dataid == id){
+                        data[i].Activities += document.getElementById("activity").value + "||";
+                        data[i].Contribution += document.getElementById("contribution").value + "||";
+                    }
+                }
+            }
+        }
+    } 
+}
+
+function openForm(id){
+    document.getElementById("popupForm").style.display = "block";
+    document.getElementById("infoBox").style.display = "block";
+    infoBoxPop(id);
+    document.getElementById("formTitle").innerText = id;
+}
+
+function closeForm(){
+    document.getElementById("popupForm").style.display = "none";
+    document.getElementById("infoBox").style.display = "none";
+}
+
 function csvToArray(str, delimiter = ",") {
     const headers = str.slice(0, str.indexOf("\r\n")).split(delimiter);
     const rows = str.slice(str.indexOf("\n") + 1).split("\n");
@@ -75,6 +125,7 @@ function populate(){
     for(let i = 0;i < data.length;i++){
         let dateStart = data[i].Start.split("||");
         let dateEnd = data[i].End.split("||");
+        let Percent = data[i].Weighting.split("||");
         for(const [key, value] of Object.entries(data[i])){
             if(key == "Tasks"){
                 let tasks = value.split("||")
@@ -85,13 +136,14 @@ function populate(){
                     document.getElementById("tasks").appendChild(newElement);
                     var newList = document.createElement("ul");
                     newList.classList.add("chart-row-bars");
-                    newList.id = data[i].Module + tasks[z];
+                    newList.id = data[i].Module + " " + tasks[z];
+                    newList.setAttribute("onclick","openForm(this.id)");
                     document.getElementById("tasks").appendChild(newList);
                     var newItem = document.createElement("li");
-                    newItem.innerHTML = tasks[z];
+                    newItem.innerHTML = tasks[z] + ":" + Percent[z];
                     newItem.classList.add("chart-li");
                     newItem.style.gridColumn = `${dateStart[z]}/${dateEnd[z]}`;
-                    document.getElementById(data[i].Module + tasks[z]).appendChild(newItem);
+                    document.getElementById(data[i].Module + " " + tasks[z]).appendChild(newItem);
                 }
             }
         }
