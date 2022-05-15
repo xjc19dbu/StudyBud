@@ -1,91 +1,54 @@
-.container {  
-	max-width: 1200px; 
-	min-width: 650px;  
-	margin: 0 auto; 
-	padding: 50px;
-}
-.chart { 
-	display: grid;  
-	border: 2px solid #000;  
-	position: relative;  
-	overflow: hidden; 
-} 
-.chart-row {  
-	display: grid; 
-	grid-template-columns: 75px 1fr; 
-	background-color: #DCDCDC;
-}
-.chart-period { 
-	color:  #fff;  
-	background-color:  #708090 !important;  
-	border-bottom: 2px solid #000;  
-	grid-template-columns: 75px repeat(12, 1fr);
-
-}
-
-.chart-period > span {
-	text-align: center;  
-	font-size: 15px;  
-	align-self: center;  
-	font-weight: bold;  
-	padding: 15px 0;   
-}
-.chart-lines { 
-	position: absolute;  
-	height: 100%;  
-	width: 100%;  
-	background-color: transparent;  
-	grid-template-columns: 75px repeat(12, 1fr);}
-
-.chart-lines > span {  
-	display: block;  border-right: 1px solid rgba(0, 0, 0, 0.3);
-}
-.chart-row-item { 
-	background-color: #808080;  
-	border: 1px solid #000;  
-	border-top: 0;  border-left: 0;  
-	padding: 20px 0;  font-size: 10px;  
-	font-weight: bold;  
-	text-align: center;
-}
-.chart-row-bars { 
-	list-style: none; 
-	display: grid;  padding: 15px 0;  
-	margin: 0;  
-	grid-template-columns: repeat(12, 1fr); 
-	grid-gap: 10px 0;  
-	border-bottom: 1px solid #000;
-}
-li {  
-    font-weight: 450;  
-    text-align: left;  
-    font-size: 10px;  min-height: 15px;  
-    background-color: #708090;  
-    padding: 5px 15px;  color: #fff;  
-    overflow: hidden;  
-    position: relative;  
-    cursor: pointer;  
-    border-radius: 15px;
- } 
- 
-ul .chart-li-one { 
- 	grid-column: 1/2;  
-        background-color: #588BAE;
- }
-.formPopup {
-	display: none;
-	position: fixed;
-	left: 45%;
-	top: 5%;
-	transform: translate(-50%, 5%);
-	border: 3px solid #999999;
-	z-index: 9;
-}
-.formContainer {
-	max-width: 300px;
-	padding: 20px;
-	background-color: #fff;
-}
-.infoBox {
-	display: none;
-}
+body {
+    background-color: #A7C0CD;
+  }
+  
+  h1 {
+    color: white;
+    text-align: center;
+    background-color: #4B636E;
+    height: 50px;
+  }
+  
+  h2 {
+    font-size: 20px;
+    text-align: center;
+    color: white;
+  }
+  
+  #roundBox {
+    text-align: center;
+    font-family: helonia;
+  }
+  
+  label {
+      display: block;
+  }
+  
+  fieldset {
+      background-color: #4B636E;
+      color: white;
+      border-radius: 25px;
+      border-color: white;
+      width: 300px;
+      position:absolute;
+      margin-top:30px;
+      margin-left:465px;
+  }
+  
+  #signIn{
+      position:absolute;
+      margin-top:240px;
+      margin-left:520px;
+      
+  }
+  
+  #signUp{
+      position:absolute;
+      margin-top:165px;
+      margin-left:530px;
+      
+  }
+  
+  #link{
+      color:#ADD8E6;
+  }
