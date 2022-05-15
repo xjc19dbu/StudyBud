@@ -10,10 +10,3 @@ FDC2,Coursework 2,FDC,2022/02/26,2022/04/29,null,50,FDC1
 SE,Software Engineering,null,2022/01/13,2022/04/26,null,40,null
 SE1,Report,SE,2022/01/13,2022/02/25,null,100,null
 SE2,Demo,SE,2022/02/26,2022/04/26,null,35,SE1
-AOS,Architectures and Operating Systems,null,2021/08/25,2021/11/14,null,100,null
-AOS1,Coursework,AOS,2021/10/25,2021/11/14,null,100,AOS
-P2,Programming 2,null,2021/08/22,2021/11/20,null,100,null
-P21,Coursework 1,P2,2021/08/22,2021/10/14,null,50,null
-P22,Coursework 2,P2,2021/10/14,2021/11/20,null,50,P21
-SA,Systems Analysis,null,2021/08/23,2021/11/11,null,100,null
-SA1,Exam,SA,2021/11/10,2021/11/11,null,100,SA
