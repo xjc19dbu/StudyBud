@@ -1,0 +1,8 @@
+Task ID,Task Name,Resource,Start Date,End Date,Duration,Percent Complete,Dependencies
+AOS,Architectures and Operating Systems,null,2021/08/25,2021/11/14,null,100,null
+AOS1,Coursework,AOS,2021/10/25,2021/11/14,null,100,AOS
+P2,Programming 2,null,2021/08/22,2021/11/20,null,100,null
+P21,Coursework 1,P2,2021/08/22,2021/10/14,null,50,null
+P22,Coursework 2,P2,2021/10/14,2021/11/20,null,50,P21
+SA,Systems Analysis,null,2021/08/23,2021/11/11,null,100,null
+SA1,Exam,SA,2021/11/10,2021/11/11,null,100,SA

@@ -1,0 +1,12 @@
+Task ID,Task Name,Resource,Start Date,End Date,Duration,Percent Complete,Dependencies
+DSA,Data Structures and Algorithms,null,2022/01/11,2022/04/25,null,30,null
+DSA1,Research,DSA,2022/01/11,2022/02/01,null,100,null
+DSA2,Analysis,DSA,2022/02/01,2022/02/15,null,50,DSA1
+DSA3,Programming,DSA,2022/02/15,2022/03/15,null,0,DSA2
+DSA4,Testing,DSA,2022/03/15,2022/04/25,null,0,DSA3
+FDC,Foundations of Data Science,null,2022/01/20,2022/04/29,null,50,null
+FDC1,Coursework 1,FDC,2022/01/20,2022/02/25,null,100,null
+FDC2,Coursework 2,FDC,2022/02/26,2022/04/29,null,50,FDC1
+SE,Software Engineering,null,2022/01/13,2022/04/26,null,40,null
+SE1,Report,SE,2022/01/13,2022/02/25,null,100,null
+SE2,Demo,SE,2022/02/26,2022/04/26,null,35,SE1
