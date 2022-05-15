@@ -59,6 +59,28 @@ function onSignInClick(event){
     return;
 }
 
+function onSubmitProfileClick(event){/////////////////////////////////////////////////////////////////////////////
+    event.preventDefault();
+
+    console.log("fucking wanker");
+
+    const values = {
+        name:(document.getElementById("semesterName").value)
+    }
+
+    const stringifyValues = JSON.stringify(values);
+    console.log("before");
+    console.log(values);
+
+    fetch("/submitNewProfile",{
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        body: stringifyValues})
+}
+
 function infoBoxPop(id){
     for(let i = 0;i < data.length;i++){
         let Module = data[i].Module;
@@ -173,6 +195,14 @@ catch(error){
     console.log("error as there is no login button  :::::",error)
 }
 
+const submitSemesterProfile = document.getElementById('submitSemester');
+try{
+    submitSemesterProfile.addEventListener("click",onSubmitProfileClick);
+}
+catch(error){
+    console.log("error as there is no submit profile button  :::::",error)
+}
+
 const fileInput = document.getElementById('myFile');
 try{
     readFile = function() {
@@ -189,3 +219,10 @@ try{
 catch(error){
     console.log("error as there is no file button  :::::",error)
 }
+
+
+
+
+
+//classes - semester, module, task
+
