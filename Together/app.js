@@ -62,6 +62,35 @@ app.post("/SignIn",jsonParser,function(req,res){ //this will be called to return
     })
 })
 
+app.post("/submitNewProfile",jsonParser,function(req,res){ //this function writes the details from the imported file to a json file
+    //this will also include the name the user decides to call it as well as a unique identifier
+    const body = JSON.stringify(req.body);
+
+
+    fs.readFile('semesters.json','utf8', (err, data) => {
+        if (err) {
+            console.error(err);
+            return
+        }
+        else{ 
+            console.log("start");
+            var jsonValues1 = JSON.parse(data); //from file
+            const iValue = jsonValues1.length; //the unique value associated with this semester
+            body["index"] = iValue;
+            console.log(body);
+            jsonValues1.profiles.push(body); //add values to the json accounts
+            console.log(jsonValues1);
+            var jsonStringify = JSON.stringify(jsonValues1);
+            fs.writeFile('semesters.json',jsonStringify,'utf-8',err => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+            });
+        }
+        console.log("end");
+    })
+})
 
 
 app.listen(3000, function(){ //make the port 3000 listen
