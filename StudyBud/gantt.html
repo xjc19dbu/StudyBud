@@ -109,7 +109,12 @@
                             globalThis.TaskName = value;
                             break;
                         case "Resource":
-                            globalThis.Resource = JSON.parse(value);
+                            if(value == "null"){
+                                globalThis.Resource = JSON.parse(value);
+                            }
+                            else{
+                                globalThis.Resource = String(value);
+                            }
                             break;
                         case "Start Date":
                             globalThis.StartDate = value.split('/');
@@ -124,7 +129,12 @@
                             globalThis.Percent = parseInt(value);
                             break;
                         case "Dependencies":
-                            globalThis.Dependencies = JSON.parse(value);
+                            if(value == "null\r" || value == "null"){
+                                globalThis.Dependencies = JSON.parse(value);
+                            }
+                            else{
+                                globalThis.Dependencies = String(value).trim();
+                            }
                             break;
                         default:
                             console.log("Read Error");
