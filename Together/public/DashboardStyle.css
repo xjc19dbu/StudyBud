@@ -1,0 +1,78 @@
+.container{
+  display:grid;
+  height:100vh;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0.2fr 1.5fr 1.2fr 0.8fr;
+  grid-template-areas:
+    "nav nav nav nav"
+    "Deadlines Modules Gantt Gantt"
+    "Upcoming Modules Gantt Gantt"
+    "Missed footer footer footer" ;
+  grid-gap: 0.5rem;  
+
+}
+
+nav{
+  background-color: #4B636E;
+  grid-area: nav;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#Modules{
+  background-color: #A7C0CD;
+  grid-area: Modules;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#Deadlines{
+  background-color: #83FF59;
+  grid-area: Deadlines;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#Upcoming{
+  background-color: #FAFF59;
+  grid-area: Upcoming;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#Missed{
+  background-color: #FF5959;
+  grid-area: Missed;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#Gantt{
+  background-color: #78909C;
+  grid-area:Gantt;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+footer{
+  background-color: #4B636E;
+  grid-area: footer;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+@media only screen and (max-width:550px){
+  .container{
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.2fr 1fr 1fr 1fr 1fr 2fr 0.2fr;
+    grid-template-areas: 
+      "nav"
+      "Modules"
+      "Deadlines"
+      "Upcoming"
+      "Missed"
+      "Gantt"
+      "footer";
+
+  }
+}

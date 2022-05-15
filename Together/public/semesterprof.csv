@@ -1,0 +1,6 @@
+Module,Tasks,Start,End,Weighting,Activities,Contribution
+Cyber Security,Coursework||Exam,1||6,3||6,40%||60%,||,||
+Programming,Coursework||Exam,2||6,4||6,75%||25%,||,||
+Web Development,Coursework 1||Coursework 2,8||9,10||11,50%||50%,||,||
+Systems Development,Exam,11,11,100%,,
+Data Science,Exam,12,12,100%,,
