@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="DashboardStyle.css">
+    </head>
+
+    <div class="container">
+        <nav>Navbar</nav>
+        <div id="Deadlines">Deadlines Completed<br>
+        </div>
+        <div id="Upcoming">Upcoming Deadlines<br>
+        </div>
+        <div id="Missed">Missed Deadlines<br>
+        </div>
+        <div id="Gantt">
+            <body> 
+                <label for="files">Upload Semester Profile:</label>
+                <br>
+                <input type="file" id="myFile" accept=".csv" required/>
+                <br>
+            
+                <script src="app2.js"></script>
+                <script src="gantt.js"></script>
+            
+            
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                function ganttChart(){
+                    google.charts.load('current', {'packages':['gantt']});
+                    google.charts.setOnLoadCallback(drawChart);
+                    
+                    function daysToMilliseconds(days) {
+                        return days * 24 * 60 * 60 * 1000;
+                    }
+                    
+                    function drawChart() {
+                    
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'Task ID');
+                        data.addColumn('string', 'Task Name');
+                        data.addColumn('string', 'Resource');
+                        data.addColumn('date', 'Start Date');
+                        data.addColumn('date', 'End Date');
+                        data.addColumn('number', 'Duration');
+                        data.addColumn('number', 'Percent Complete');
+                        data.addColumn('string', 'Dependencies');
+            
+                        datarow = [];
+                        Names = [];
+                        Deadlines = [];
+                        Percents = [];
+                        document.getElementById("Deadlines").innerHTML = "Deadlines Completed<br>";
+                        document.getElementById("Upcoming").innerHTML = "Upcoming Deadlines<br>";
+                        document.getElementById("Missed").innerHTML = "Missed Deadlines<br>";
+                        for(let i = 0;i < csvData.length;i++){
+                            for(const [key, value] of Object.entries(csvData[i])){
+                                switch(key){
+                                    case "Task ID":
+                                        globalThis.TaskID = value;
+                                        break;
+                                    case "Task Name":
+                                        Names.push([value]);
+                                        globalThis.TaskName = value;
+                                        break;
+                                    case "Resource":
+                                        if(value == "null"){
+                                            globalThis.Resource = JSON.parse(value);
+                                        }
+                                        else{
+                                            globalThis.Resource = String(value);
+                                        }
+                                        break;
+                                    case "Start Date":
+                                        globalThis.StartDate = value.split('/');
+                                        break;
+                                    case "End Date":
+                                        Deadlines.push(value);
+                                        globalThis.EndDate = value.split('/');
+                                        break;
+                                    case "Duration":
+                                        globalThis.Duration = JSON.parse(value);
+                                        break;
+                                    case "Percent Complete":
+                                        Percents.push([value]);
+                                        globalThis.Percent = parseInt(value);
+                                        break;
+                                    case "Dependencies":
+                                        if(value == "null\r" || value == "null"){
+                                            globalThis.Dependencies = JSON.parse(value);
+                                        }
+                                        else{
+                                            globalThis.Dependencies = String(value).trim();
+                                        }
+                                        break;
+                                    default:
+                                        console.log("Read Error");
+                                        break;
+                                }
+                            }
+                            datarow.push([TaskID, TaskName, Resource, new Date(StartDate[0],StartDate[1],StartDate[2]),
+                                        new Date(EndDate[0],EndDate[1],EndDate[2]), Duration, Percent, Dependencies]);
+                        }
+                        console.log(datarow);
+                        data.addRows(datarow);
+            
+                        var options = {height: 500,gantt: {trackHeight: 25}};
+                        var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+            
+                        chart.draw(data, options);
+                        
+                        for(let i = 0;i < Names.length;i++){
+                          console.log(Deadlines[i]);
+                          let d = Deadlines[i].split('/');
+                          console.log(d);
+                          if(Percents[i] == 100){
+                            document.getElementById("Deadlines").innerText += `${Names[i]}:${Deadlines[i]}\n`;
+                          }
+                          else if(Percents[i] != 100 && new Date(d[0],d[1],d[2]) > new Date()){
+                            document.getElementById("Upcoming").innerText += `${Names[i]}:${Deadlines[i]}\n`;
+                          }
+                          else{
+                            document.getElementById("Missed").innerText += `${Names[i]}:${Deadlines[i]}\n`;
+                          }
+                        }
+                    }
+                }
+            
+                function csvToArray(str, delimiter = ",") {
+                        const headers = str.slice(0, str.indexOf("\r\n")).split(delimiter);
+                        const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+                        const arr = rows.map(function (row) {
+                        const values = row.split(delimiter);
+                        const el = headers.reduce(function (object, header, index) {
+                            object[header] = values[index];
+                            return object;
+                        }, {});
+                        return el;
+                    });
+                    return arr;
+                }
+            
+                const fileInput = document.getElementById('myFile');
+                try{
+                    readFile = function() {
+                        var reader = new FileReader();
+                        reader.onload = function () {
+                            globalThis.csvData = csvToArray(reader.result);
+                            ganttChart();
+                        };
+                        // start reading the file. When it is done, calls the onload event defined above.
+                        reader.readAsBinaryString(fileInput.files[0]);
+                    };
+                    fileInput.addEventListener("change",readFile);
+                }
+                catch(error){
+                    console.log("error as there is no file button  :::::",error)
+                }
+                
+            </script>
+            <div id="chart_div"></div>
+            </body>
+            </html>
+
+        </div>
+    </div>
+
+</html>
