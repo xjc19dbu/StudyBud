@@ -1,5 +1,9 @@
 Task ID,Task Name,Resource,Start Date,End Date,Duration,Percent Complete,Dependencies
 DSA,Data Structures and Algorithms,null,2022/01/11,2022/04/25,null,30,null
+DSA1,Research,DSA,2022/01/11,2022/02/01,null,20,null
+DSA2,Analysis,DSA,2022/02/01,2022/02/15,null,0,DSA1
+DSA3,Programming,DSA,2022/02/15,2022/03/15,null,0,DSA2
+DSA4,Testing,DSA,2022/03/15,2022/04/25,null,0,DSA3
 FDC,Foundations of Data Science,null,2022/01/20,2022/04/29,null,50,null
 SE,Software Engineering,null,2022/01/13,2022/04/26,null,40,null
 AOS,Architectures and Operating Systems,null,2021/08/25,2022/0/14,null,100,null
