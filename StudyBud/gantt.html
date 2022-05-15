@@ -67,59 +67,114 @@
       <h1>Computing Science - Year 2</h1>
     </div>
 
+    <label for="files">Upload Semester Profile:</label>
+    <br>
+    <input type="file" id="myFile" accept=".csv" required/>
+    <br>
+
     <script src="app2.js"></script>
     <script src="gantt.js"></script>
 
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['gantt']});
-  google.charts.setOnLoadCallback(drawChart);
-
-  function daysToMilliseconds(days) {
-    return days * 24 * 60 * 60 * 1000;
-  }
-
-  function drawChart() {
-
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Task ID');
-    data.addColumn('string', 'Task Name');
-    data.addColumn('string', 'Resource');
-    data.addColumn('date', 'Start Date');
-    data.addColumn('date', 'End Date');
-    data.addColumn('number', 'Duration');
-    data.addColumn('number', 'Percent Complete');
-    data.addColumn('string', 'Dependencies');
-
-
-    data.addRows([
-        ['DSA', 'Data Structures and Algorithms', null,
-         new Date(2022, 1, 11), new Date(2022, 4, 25), null, 30, null],
-        ['FDC', 'Foundations of Data Science', null,
-         new Date(2022, 1, 20), new Date(2022, 4, 29), null, 50, null],
-        ['SE', 'Software Engineering', null,
-         new Date(2022, 1, 13), new Date(2022, 4, 26), null, 40, null],
-        ['AOS', 'Architectures and Operating Systems', null,
-         new Date(2021, 8, 25), new Date(2022, 0, 14), null, 100, null],
-        ['P2', 'Programming 2', null,
-         new Date(2021, 8, 22), new Date(2022, 0, 20), null, 90, null],
-        ['SA', 'Systems Analysis', null,
-         new Date(2021, 8, 23), new Date(2022, 0, 11), null, 80, null]
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+    function ganttChart(){
+        google.charts.load('current', {'packages':['gantt']});
+        google.charts.setOnLoadCallback(drawChart);
         
-      ]);
-
-      var options = {
-        height: 600,
-        gantt: {
-          trackHeight: 30
+        function daysToMilliseconds(days) {
+            return days * 24 * 60 * 60 * 1000;
         }
-      };
+        
+        function drawChart() {
+        
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Task ID');
+            data.addColumn('string', 'Task Name');
+            data.addColumn('string', 'Resource');
+            data.addColumn('date', 'Start Date');
+            data.addColumn('date', 'End Date');
+            data.addColumn('number', 'Duration');
+            data.addColumn('number', 'Percent Complete');
+            data.addColumn('string', 'Dependencies');
 
-      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+            datarow = [];
+            for(let i = 0;i < csvData.length;i++){
+                for(const [key, value] of Object.entries(csvData[i])){
+                    switch(key){
+                        case "Task ID":
+                            globalThis.TaskID = value;
+                            break;
+                        case "Task Name":
+                            globalThis.TaskName = value;
+                            break;
+                        case "Resource":
+                            globalThis.Resource = JSON.parse(value);
+                            break;
+                        case "Start Date":
+                            globalThis.StartDate = value.split('/');
+                            break;
+                        case "End Date":
+                            globalThis.EndDate = value.split('/');
+                            break;
+                        case "Duration":
+                            globalThis.Duration = JSON.parse(value);
+                            break;
+                        case "Percent Complete":
+                            globalThis.Percent = parseInt(value);
+                            break;
+                        case "Dependencies":
+                            globalThis.Dependencies = JSON.parse(value);
+                            break;
+                        default:
+                            console.log("Read Error");
+                            break;
+                    }
+                }
+                datarow.push([TaskID, TaskName, Resource, new Date(StartDate[0],StartDate[1],StartDate[2]),
+                            new Date(EndDate[0],EndDate[1],EndDate[2]), Duration, Percent, Dependencies]);
+            }
+            console.log(datarow);
+            data.addRows(datarow);
 
-      chart.draw(data, options);
+            var options = {height: 600,gantt: {trackHeight: 30}};
+            var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+            chart.draw(data, options);   
+        }
     }
+
+    function csvToArray(str, delimiter = ",") {
+            const headers = str.slice(0, str.indexOf("\r\n")).split(delimiter);
+            const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+            const arr = rows.map(function (row) {
+            const values = row.split(delimiter);
+            const el = headers.reduce(function (object, header, index) {
+                object[header] = values[index];
+                return object;
+            }, {});
+            return el;
+        });
+        return arr;
+    }
+
+    const fileInput = document.getElementById('myFile');
+    try{
+        readFile = function() {
+            var reader = new FileReader();
+            reader.onload = function () {
+                globalThis.csvData = csvToArray(reader.result);
+                ganttChart();
+            };
+            // start reading the file. When it is done, calls the onload event defined above.
+            reader.readAsBinaryString(fileInput.files[0]);
+        };
+        fileInput.addEventListener("change",readFile);
+    }
+    catch(error){
+        console.log("error as there is no file button  :::::",error)
+    }
+    
 </script>
 <div id="chart_div"></div>
 </body>
