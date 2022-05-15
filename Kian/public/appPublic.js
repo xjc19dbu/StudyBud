@@ -86,8 +86,12 @@ function submitForm(id){
                 for(let z = 0; z < tasks.length;z++){
                     let dataid = Module + " " + tasks[z];
                     if(dataid == id){
-                        data[i].Activities += document.getElementById("activity").value + "||";
-                        data[i].Contribution += document.getElementById("contribution").value + "||";
+                        let Activities = data[i].Activities.split("||");
+                        Activities[z] = document.getElementById("activity").value;
+                        data[i].Activities = Activities.join("||");
+                        let Contribution = data[i].Contribution.split("||");
+                        Contribution[z] = document.getElementById("contribution").value;
+                        data[i].Contribution = Contribution.join("||");;
                     }
                 }
             }
