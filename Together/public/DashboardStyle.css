@@ -5,9 +5,9 @@
   grid-template-rows: 0.2fr 1.5fr 1.2fr 0.8fr;
   grid-template-areas:
     "nav nav nav nav"
-    "Deadlines Modules Gantt Gantt"
-    "Upcoming Modules Gantt Gantt"
-    "Missed footer footer footer" ;
+    "Deadlines Gantt Gantt Gantt"
+    "Upcoming Gantt Gantt Gantt"
+    "Missed Modules Modules Modules" ;
   grid-gap: 0.5rem;  
 
 }
@@ -54,25 +54,19 @@ nav{
   padding: 5px;
 }
 
-footer{
-  background-color: #4B636E;
-  grid-area: footer;
-  border-radius: 5px;
-  padding: 5px;
-}
+
 
 @media only screen and (max-width:550px){
   .container{
     grid-template-columns: 1fr;
-    grid-template-rows: 0.2fr 1fr 1fr 1fr 1fr 2fr 0.2fr;
+    grid-template-rows: 0.2fr 1fr 1fr 1fr 1fr 2fr;
     grid-template-areas: 
       "nav"
       "Modules"
       "Deadlines"
       "Upcoming"
       "Missed"
-      "Gantt"
-      "footer";
+      "Gantt";
 
   }
 }
