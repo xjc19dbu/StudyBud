@@ -6,11 +6,14 @@
 
     <div class="container">
         <nav>Navbar</nav>
-        <div id="Deadlines">Deadlines Completed<br>
+        <div id="Deadlines"><b>Deadlines Completed</b><br>
+            <p id="Deadlinesp"></p>
         </div>
-        <div id="Upcoming">Upcoming Deadlines<br>
+        <div id="Upcoming"><b>Upcoming Deadlines</b><br>
+            <p id="Upcomingp"></p>
         </div>
-        <div id="Missed">Missed Deadlines<br>
+        <div id="Missed"><b>Missed Deadlines</b><br>
+            <p id="Missedp"></p>
         </div>
         <div class="formPopup" id="popupForm">
           <div class="formContainer">
@@ -24,46 +27,70 @@
               <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
           </div>
         </div>
+        <div class="formPopup" id="popupForm2">
+            <div class="formContainer2">
+                <label id="formTitle">Edit Percentage</label><br>
+                <input type="number" id="FPercent" placeholder="New Percent" required><br>
+                <button type="submit" class="btn" onclick="submitPercent()">Submit</button>
+                <button type="button" class="btn cancel" onclick="closePercent()">Close</button>
+            </div>
+        </div>
         <script>
           function submitForm(){
             let FTaskID = document.getElementById("FTaskID").value;
             let FTaskName = document.getElementById("FTaskName").value;
             let FResource = null;
             let FStartDate = document.getElementById("FStartDate").value;
-            FStartDate = FStartDate.split("/");
-            FStartDate = new Date(FStartDate[0],FStartDate[1],FStartDate[2]);
             let FEndDate = document.getElementById("FEndDate").value;
-            
             let FDuration = null;
             let FPercentComplete = parseInt(document.getElementById("FPercentComplete").value);
             let FDependencies = null;
-            moretasks = [FTaskID,FTaskName,FResource,FStartDate,FEndDate,FDuration,FPercentComplete,FDependencies];
-            ganttChart(moretasks);
+            moretasks = new Map([['Task ID', FTaskID],['Task Name',FTaskName],['Resource',FResource],
+            ['Start Date',FStartDate],['End Date',FEndDate],['Duration',FDuration],
+            ['Percent Complete',FPercentComplete],['Dependencies',FDependencies]]);
+            let obj = Object.fromEntries(moretasks)
+            csvData.push(obj);
+            ganttChart();
+          }
+
+          function submitPercent(){
+              let percentage = document.getElementById("FPercent").value;
+              let selection = chart.getSelection();
+              (csvData[selection[0].row])["Percent Complete"] = percentage;
+              ganttChart();
+              closePercent();
           }
 
           function openForm(){
             document.getElementById("popupForm").style.display = "block";
           }
 
+          function openPercent(){
+            document.getElementById("popupForm2").style.display = "block";
+          }
+
           function closeForm(){
-          document.getElementById("popupForm").style.display = "none";
+            document.getElementById("popupForm").style.display = "none";
+          }
+
+          function closePercent(){
+              ganttChart();
+                document.getElementById("popupForm2").style.display = "none";
           }
         </script>
         <div id="Gantt">
             <body> 
-                <label for="files">Upload Semester Profile:</label>
+                <label for="files"><b>Upload Semester Profile:</b></label>
                 <br>
                 <input type="file" id="myFile" accept=".csv" required/>
-                <br>
                 <button onclick="openForm()">Add Tasks</button>
-            
+
                 <script src="app2.js"></script>
                 <script src="gantt.js"></script>
             
-            
                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                 <script type="text/javascript">
-                function ganttChart(moretasks){
+                function ganttChart(){
                     google.charts.load('current', {'packages':['gantt']});
                     google.charts.setOnLoadCallback(drawChart);
                     
@@ -83,13 +110,10 @@
                         data.addColumn('number', 'Percent Complete');
                         data.addColumn('string', 'Dependencies');
             
-                        datarow = [];
+                        globalThis.datarow = [];
                         Names = [];
                         Deadlines = [];
                         Percents = [];
-                        document.getElementById("Deadlines").innerHTML = "Deadlines Completed<br>";
-                        document.getElementById("Upcoming").innerHTML = "Upcoming Deadlines<br>";
-                        document.getElementById("Missed").innerHTML = "Missed Deadlines<br>";
                         for(let i = 0;i < csvData.length;i++){
                             for(const [key, value] of Object.entries(csvData[i])){
                                 switch(key){
@@ -101,7 +125,7 @@
                                         globalThis.TaskName = value;
                                         break;
                                     case "Resource":
-                                        if(value == "null"){
+                                        if(value == "null" || value == null){
                                             globalThis.Resource = JSON.parse(value);
                                         }
                                         else{
@@ -123,7 +147,7 @@
                                         globalThis.Percent = parseInt(value);
                                         break;
                                     case "Dependencies":
-                                        if(value == "null\r" || value == "null"){
+                                        if(value == "null\r" || value == "null" || value == null){
                                             globalThis.Dependencies = JSON.parse(value);
                                         }
                                         else{
@@ -138,32 +162,30 @@
                             datarow.push([TaskID, TaskName, Resource, new Date(StartDate[0],StartDate[1],StartDate[2]),
                                         new Date(EndDate[0],EndDate[1],EndDate[2]), Duration, Percent, Dependencies]);
                         }
-                        if(moretasks != null){
-                          Names.push(moretasks[1]);
-                          Deadlines.push(moretasks[4]);
-                          Percents.push(moretasks[6]);
-                          let D = moretasks[4].split("/");
-                          moretasks[4] = new Date(D[0],D[1],D[2]);
-                          datarow.push(moretasks);
-                        }
                         console.log(datarow);
                         data.addRows(datarow);
             
                         var options = {height: 450,gantt: {trackHeight: 25}};
-                        var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
-            
+                        globalThis.chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+                        google.visualization.events.addListener(chart,'select',selecta);
+
+                        function selecta(){
+                            openPercent();
+                        }
+
                         chart.draw(data, options);
                         
                         for(let i = 0;i < Names.length;i++){
                           let d = Deadlines[i].split('/');
                           if(Percents[i] == 100){
-                            document.getElementById("Deadlines").innerText += `${Names[i]}:${Deadlines[i]}\n`;
+                            document.getElementById("Deadlinesp").innerText += `${Names[i]}:${Deadlines[i]}\n`;
                           }
                           else if(Percents[i] != 100 && new Date(d[0],d[1],d[2]) > new Date()){
-                            document.getElementById("Upcoming").innerText += `${Names[i]}:${Deadlines[i]}\n`;
+                            document.getElementById("Upcomingp").innerText += `${Names[i]}:${Deadlines[i]}\n`;
                           }
                           else{
-                            document.getElementById("Missed").innerText += `${Names[i]}:${Deadlines[i]}\n`;
+                            document.getElementById("Missedp").innerText += `${Names[i]}:${Deadlines[i]}\n`;
                           }
                         }
                     }
@@ -207,5 +229,4 @@
 
         </div>
     </div>
-
 </html>
