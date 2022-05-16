@@ -1,0 +1,54 @@
+body {
+    background-color: #A7C0CD;
+  }
+  
+  h1 {
+    color: white;
+    text-align: center;
+    background-color: #4B636E;
+    height: 50px;
+  }
+  
+  h2 {
+    font-size: 20px;
+    text-align: center;
+    color: white;
+  }
+  
+  #roundBox {
+    text-align: center;
+    font-family: helonia;
+  }
+  
+  label {
+      display: block;
+  }
+  
+  fieldset {
+      background-color: #4B636E;
+      color: white;
+      border-radius: 25px;
+      border-color: white;
+      width: 300px;
+      position:absolute;
+      margin-top:30px;
+      margin-left:465px;
+  }
+  
+  #signIn{
+      position:absolute;
+      margin-top:240px;
+      margin-left:520px;
+      
+  }
+  
+  #signUp{
+      position:absolute;
+      margin-top:165px;
+      margin-left:530px;
+      
+  }
+  
+  #link{
+      color:#ADD8E6;
+  }
